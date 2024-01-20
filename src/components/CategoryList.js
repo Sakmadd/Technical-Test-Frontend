@@ -1,23 +1,38 @@
 import React,{useState,useEffect} from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 const CategoryList = () => {
 
   const [categories, setCategories] = useState([])
 
   useEffect(()=>{
-    getuser()
+    getCategory()
   },[])
 
-  const getuser = async() =>{
+  
+  const getCategory = async() =>{
     const response = await axios.get('http://localhost:5000/categories')
     setCategories(response.data)
   }
+  
+  const deleteCategory = async(id) =>{
+    try {
+      await axios.delete(`http://localhost:5000/categories/${id}`)
+      getCategory()
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
-    <div className='columns'>
-      <div className="colomn is-half">
-        <table className='table is-striped is-fullwidth mt-5'>
+      <><h5 className='has-text-centered is-size-1 mt-5'>BOOK CATEGORIES</h5>
+      <div className="buttons is-centered my-5">
+      <Link to="/category/add" className='button is-success'>Add New Category</Link>
+      </div>
+      <div className='columns'>
+      <div className="colomn is-half mt-5 mx-auto">
+        <table className='table is-striped is-fullwidth '>
           <thead>
             <tr>
               <th>No</th>
@@ -29,23 +44,23 @@ const CategoryList = () => {
             </tr>
           </thead>
           <tbody>
-            {categories.map((category,index) => (
-            <tr key={category._id}>
-              <td>{index + 1}</td>
-              <td>{category._id}</td>
-              <td>{category.name}</td>
-              <td>{category.created_at}</td>
-              <td>{category.updated_at}</td>
-              <td>
-                <button className='button is-info is-small'>Edit</button>
-                <button className='button is-danger is-small'>Delete</button>
-              </td>
-            </tr>
+            {categories.map((category, index) => (
+              <tr key={category._id}>
+                <td>{index + 1}</td>
+                <td>{category._id}</td>
+                <td>{category.name}</td>
+                <td>{category.created_at}</td>
+                <td>{category.updated_at}</td>
+                <td>
+                  <Link to={`/category/edit/${category._id}`} className='button is-info is-small'>Edit</Link>
+                  <button onClick={() => deleteCategory(category._id)} className='button is-danger is-small'>Delete</button>
+                </td>
+              </tr>
             ))}
           </tbody>
         </table>
       </div>
-    </div>
+    </div></>
   )
 }
 
