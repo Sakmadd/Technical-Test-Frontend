@@ -11,6 +11,7 @@ const CategoryList = () => {
   },[])
 
   
+
   const getCategory = async() =>{
     const response = await axios.get('http://localhost:5000/categories')
     setCategories(response.data)
@@ -26,7 +27,7 @@ const CategoryList = () => {
   }
 
   return (
-      <><h5 className='has-text-centered is-size-1 mt-5'>BOOK CATEGORIES</h5>
+      <><h5 className='has-text-centered is-size-1 mt-5'>CATEGORIES</h5>
       <div className="buttons is-centered my-5">
       <Link to="/category/add" className='button is-success'>Add New Category</Link>
       </div>
