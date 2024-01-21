@@ -53,6 +53,8 @@ const CategoryList = () => {
                 <td>{category.created_at}</td>
                 <td>{category.updated_at}</td>
                 <td>
+                  <Link to={`/categories/${category._id}`} className='button is-warning is-small'>Collection</Link>
+                  <Link to={`/category/book/add/${category._id}`} className='button is-success is-small'>Add</Link>
                   <Link to={`/category/edit/${category._id}`} className='button is-info is-small'>Edit</Link>
                   <button onClick={() => deleteCategory(category._id)} className='button is-danger is-small'>Delete</button>
                 </td>

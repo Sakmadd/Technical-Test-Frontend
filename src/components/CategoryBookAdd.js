@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom';
 
 
-const EditBook = () => {
+const CategoryBookAdd = () => {
     const [title,setTitle] = useState("")
     const [description,setDescription] = useState("")
     const [image_url,setImageUrl] = useState("")
@@ -14,37 +14,33 @@ const EditBook = () => {
 
     const {id} = useParams()
 
-    const navigate = useNavigate()
-
     useEffect(()=>{
-        getBookById()
+        getCategoryById()
     })
 
-    const getBookById = async() =>{
-        const response = await axios.get(`http://localhost:5000/books/${id}`)
-        setTitle(response.data.title)
-        setDescription(response.data.description)
-        setImageUrl(response.data.image_url)
-        setReleaseYear(response.data.release_year)
-        setPrice(response.data.price)
-        setTotalPage(response.data.total_page)
-        setCategoryId(response.data.category_id)
-      }
+    const getCategoryById = async ()=>{
+        const response = await axios.get(`http://localhost:5000/categories/${id}`)
+        setCategoryId(response.data._id)
+        console.log(response._id)
+    }
 
-    const updateBook = async (e)=> {
+    const navigate = useNavigate()
+
+    const saveBook = async (e)=> {
         e.preventDefault();
         try {
-            await axios.patch(`http://localhost:5000/books/${id}`,{title,description,image_url,release_year,price,total_page,category_id})
-            navigate('/books')
+            await axios.post('http://localhost:5000/books',{title,description,image_url,release_year,price,total_page,category_id})
+            navigate(`/categories/${id}`)
         } catch (error) {
             console.log(error)
         }
     }
+    
     return (
-        <><h5 className='has-text-centered is-size-1 mt-5'>EDIT THE BOOK</h5>
+        <><h5 className='has-text-centered is-size-1 mt-5'>ADD NEW BOOK</h5>
         <div className="columns">
             <div className="column is-half mt-5 mx-auto">
-                <form onSubmit={updateBook}>
+                <form onSubmit={saveBook}>
                     <div className="field">
                         <label className='label'>Title</label>
                         <div className="control">
@@ -99,4 +95,4 @@ const EditBook = () => {
 }
 
 
-export default EditBook
+export default CategoryBookAdd
