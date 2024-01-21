@@ -5,3 +5,5 @@
 - POST localhost:3000/category/book/add/:id  // untuk menambahkan buku dengan parameter id kategori 
 - PATCH localhost:3000/category/book/edit/:id  // untuk mengedit kategori berdasarkan id
 - DELETE localhost:5000/categories/:id // untuk menghapus kategori berdasarkan id
+
+Update : maaf blum bisa membuat seluruh fitur karena terbatas waktu, terimakasih!
